@@ -13,6 +13,14 @@ def crear_cliente_llm() -> OpenAI:
 
     La credencial y la dirección se leen de los secretos de Codespaces, nunca del repositorio.
     """
+    if os.path.exists(".env"):
+        with open(".env", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    os.environ.setdefault(k.strip(), v.strip())
+
     faltan = [v for v in ("LLM_API_KEY", "LLM_BASE_URL") if not os.environ.get(v)]
     if faltan:
         raise RuntimeError(f"Faltan los secretos {', '.join(faltan)}. Revisa la sección 2 de GUIA.md.")
