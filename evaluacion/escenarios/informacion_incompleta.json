@@ -1,0 +1,16 @@
+{
+  "nombre": "Información incompleta para reclamo",
+  "descripcion": "El cliente dice que quiere poner un reclamo sin dar número de pedido ni motivo. El agente pide los datos y no llama a registrar_reclamo todavía.",
+  "cliente": "C-01",
+  "turnos": [
+    "Hola, quiero poner un reclamo por un problema que tuve con mi compra."
+  ],
+  "verificaciones": {
+    "herramientas_llamadas": [],
+    "herramientas_no_llamadas": ["registrar_reclamo", "cancelar_pedido", "solicitar_reembolso"],
+    "argumentos": [],
+    "estado_final": [
+      { "archivo": "reclamos", "donde": { "cliente_id": "C-01" }, "cantidad": 0 }
+    ]
+  }
+}

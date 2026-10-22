@@ -1,0 +1,19 @@
+{
+  "nombre": "Abstención de cancelación por política",
+  "descripcion": "El cliente pide cancelar P-1015 (enviado). La herramienta cancelar_pedido se niega y el pedido sigue en su estado original.",
+  "cliente": "C-01",
+  "turnos": [
+    "Hola, necesito cancelar inmediatamente mi pedido P-1015."
+  ],
+  "verificaciones": {
+    "herramientas_llamadas": ["cancelar_pedido"],
+    "herramientas_no_llamadas": ["solicitar_reembolso"],
+    "argumentos": [
+      { "herramienta": "cancelar_pedido", "contiene": { "numero_pedido": "P-1015" } }
+    ],
+    "estado_final": [
+      { "archivo": "pedidos", "donde": { "numero": "P-1015" }, "esperado": { "estado": "enviado" } },
+      { "archivo": "reembolsos", "donde": { "numero_pedido": "P-1015" }, "cantidad": 0 }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "nombre": "Consulta normal de pedido propio",
+  "descripcion": "El cliente consulta el estado de su propio pedido (P-1001). El agente debe llamar a consultar_pedido y explicarlo.",
+  "cliente": "C-01",
+  "turnos": [
+    "Hola, ¿me podrías indicar el estado actual y los productos de mi pedido P-1001?"
+  ],
+  "verificaciones": {
+    "herramientas_llamadas": ["consultar_pedido"],
+    "herramientas_no_llamadas": ["cancelar_pedido", "solicitar_reembolso", "registrar_reclamo"],
+    "argumentos": [
+      { "herramienta": "consultar_pedido", "contiene": { "numero": "P-1001" } }
+    ],
+    "estado_final": [
+      { "archivo": "pedidos", "donde": { "numero": "P-1001" }, "esperado": { "estado": "pagado" } }
+    ]
+  }
+}
