@@ -1,7 +1,7 @@
 # Análisis del agente
 
 Grupo: 2
-Integrantes: Jorge Flórez (WithBaz) y equipo Grupo 2
+Integrantes: Jorge Sebastián Flórez Díaz, Jhoan Sebastián Tafur Rojas
 
 Completa cada sección antes de abrir el pull request. Escribe con tus palabras y sé concreto: es mejor una tabla corta y precisa que una larga y vaga.
 
