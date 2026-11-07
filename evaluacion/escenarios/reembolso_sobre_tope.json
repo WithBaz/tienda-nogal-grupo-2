@@ -1,0 +1,21 @@
+{
+  "nombre": "Cancelación y reembolso sobre el tope",
+  "descripcion": "Se solicita cancelar el pedido P-1005 (total $420.000). El agente pide confirmación, el cliente confirma, el pedido se cancela, el reembolso queda en estado 'solicitado' y se genera un registro en escalamientos.json.",
+  "cliente": "C-02",
+  "turnos": [
+    "Hola, quiero cancelar mi pedido P-1005 por favor.",
+    "Sí, confirmo la cancelación del pedido P-1005."
+  ],
+  "verificaciones": {
+    "herramientas_llamadas": ["cancelar_pedido"],
+    "herramientas_no_llamadas": [],
+    "argumentos": [
+      { "herramienta": "cancelar_pedido", "contiene": { "numero_pedido": "P-1005" } }
+    ],
+    "estado_final": [
+      { "archivo": "pedidos", "donde": { "numero": "P-1005" }, "esperado": { "estado": "cancelado" } },
+      { "archivo": "reembolsos", "donde": { "numero_pedido": "P-1005" }, "esperado": { "estado": "solicitado", "monto": 420000 } },
+      { "archivo": "escalamientos", "donde": { "numero_pedido": "P-1005" }, "cantidad": 1 }
+    ]
+  }
+}

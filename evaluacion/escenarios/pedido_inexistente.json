@@ -1,0 +1,16 @@
+{
+  "nombre": "Consulta de pedido inexistente",
+  "descripcion": "El cliente consulta por P-9999. El agente llama a consultar_pedido, recibe el error de inexistencia y explica cordialmente que no existe.",
+  "cliente": "C-01",
+  "turnos": [
+    "Buenas tardes, quisiera consultar el estado de mi pedido P-9999 por favor."
+  ],
+  "verificaciones": {
+    "herramientas_llamadas": ["consultar_pedido"],
+    "herramientas_no_llamadas": ["cancelar_pedido", "solicitar_reembolso", "registrar_reclamo"],
+    "argumentos": [
+      { "herramienta": "consultar_pedido", "contiene": { "numero": "P-9999" } }
+    ],
+    "estado_final": []
+  }
+}

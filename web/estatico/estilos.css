@@ -1,27 +1,420 @@
-* { box-sizing: border-box; }
-body { margin: 0; font: 15px/1.4 system-ui, sans-serif; color: #222; background: #f4f4f2; height: 100vh; display: flex; flex-direction: column; }
-header { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding: 10px 16px; background: #fff; border-bottom: 1px solid #ddd; }
-header strong { font-size: 17px; margin-right: auto; }
-button { font: inherit; padding: 5px 11px; border: 1px solid #bbb; border-radius: 4px; background: #fff; cursor: pointer; }
-button:hover { background: #eee; }
-select, input { font: inherit; padding: 5px; }
-#contador { color: #666; font-size: 13px; }
-#aviso { padding: 10px 16px; background: #fde2e1; color: #8a1c14; border-bottom: 1px solid #f0b4b0; white-space: pre-wrap; }
-main { flex: 1; display: grid; grid-template-columns: 1fr 1fr; min-height: 0; }
-section { display: flex; flex-direction: column; min-height: 0; }
-#mensajes, #pasos { flex: 1; overflow-y: auto; padding: 14px 16px; }
-#traza { background: #fff; border-left: 1px solid #ddd; }
-#traza h2 { font-size: 14px; margin: 0; padding: 10px 16px; border-bottom: 1px solid #eee; color: #555; }
-.msg { max-width: 85%; margin: 0 0 10px; padding: 8px 12px; border-radius: 8px; white-space: pre-wrap; }
-.usuario { margin-left: auto; background: #d9ebff; }
-.agente { background: #fff; border: 1px solid #ddd; }
-.esperando { color: #888; font-style: italic; }
-#formulario { display: flex; gap: 8px; padding: 10px 16px; background: #fff; border-top: 1px solid #ddd; }
-#texto { flex: 1; }
-.paso { border: 1px solid #ddd; border-radius: 6px; margin-bottom: 10px; font-size: 13px; }
-.paso b { display: block; padding: 6px 10px; background: #f0f0ec; }
-.paso pre { margin: 0; padding: 6px 10px; white-space: pre-wrap; word-break: break-word; font-size: 12px; }
-.paso .error { background: #fde2e1; }
-.turno { font-size: 12px; color: #888; margin: 12px 0 6px; }
-.vacio { color: #999; }
-@media (max-width: 800px) { main { grid-template-columns: 1fr; } #traza { border-left: 0; border-top: 1px solid #ddd; } }
+/* ==========================================================================
+   Tienda Nogal · Mostrador - Estilos Modernos
+   ========================================================================== */
+
+:root {
+  --primary: #2d6a4f;
+  --primary-dark: #1b4332;
+  --primary-light: #40916c;
+  --bg-app: #f8fafc;
+  --bg-surface: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --bubble-user: #2d6a4f;
+  --bubble-agent: #ffffff;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text-main);
+  background: var(--bg-app);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Barra Superior (Header / Navbar)
+   ========================================================================== */
+header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+}
+
+header strong {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.3px;
+}
+
+header strong::before {
+  content: "🌿";
+  font-size: 18px;
+}
+
+header label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+select {
+  font: inherit;
+  font-size: 13.5px;
+  padding: 6px 12px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  background-color: #f8fafc;
+  color: var(--text-main);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+select:hover, select:focus {
+  border-color: var(--primary);
+  background-color: #fff;
+}
+
+#contador {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0369a1;
+  background: #e0f2fe;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid #bae6fd;
+}
+
+button {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+button:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+#nueva:hover {
+  background: #f0fdf4;
+  border-color: #86efac;
+  color: var(--primary-dark);
+}
+
+#restablecer:hover {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+#exportar:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e40af;
+}
+
+#aviso {
+  padding: 12px 20px;
+  background: #fee2e2;
+  color: #991b1b;
+  border-bottom: 1px solid #fecaca;
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: pre-wrap;
+}
+
+/* ==========================================================================
+   Layout Principal
+   ========================================================================== */
+main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  min-height: 0;
+  background: var(--bg-app);
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ==========================================================================
+   Área de Chat y Conversación
+   ========================================================================== */
+#conversacion {
+  background: #f8fafc;
+  position: relative;
+}
+
+#mensajes {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.msg {
+  max-width: 80%;
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.usuario {
+  align-self: flex-end;
+  background: var(--bubble-user);
+  color: #ffffff;
+  border-radius: var(--radius-lg) var(--radius-lg) 4px var(--radius-lg);
+  box-shadow: 0 2px 6px rgba(45, 106, 79, 0.2);
+}
+
+.agente {
+  align-self: flex-start;
+  background: var(--bubble-agent);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) 4px;
+  box-shadow: var(--shadow-sm);
+}
+
+.agente strong {
+  color: var(--primary-dark);
+}
+
+.esperando {
+  color: var(--text-muted);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.esperando::before {
+  content: "●";
+  color: var(--primary);
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Formulario de Entrada de Mensaje */
+#formulario {
+  display: flex;
+  gap: 10px;
+  padding: 14px 20px;
+  background: #ffffff;
+  border-top: 1px solid var(--border-color);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.02);
+}
+
+#texto {
+  flex: 1;
+  font: inherit;
+  font-size: 14.5px;
+  padding: 10px 18px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 24px;
+  background: #f8fafc;
+  color: var(--text-main);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+#texto:focus {
+  border-color: var(--primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.12);
+}
+
+#formulario button {
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 24px;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(45, 106, 79, 0.25);
+  transition: all 0.2s ease;
+}
+
+#formulario button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(45, 106, 79, 0.3);
+}
+
+/* ==========================================================================
+   Área de Traza de Herramientas (DevTools Panel)
+   ========================================================================== */
+#traza {
+  background: #f1f5f9;
+  border-left: 1px solid var(--border-color);
+}
+
+#traza h2 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 0;
+  padding: 12px 18px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#traza h2::before {
+  content: "⚡";
+  font-size: 14px;
+}
+
+#pasos {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 18px;
+}
+
+.turno {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #64748b;
+  margin: 16px 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.turno::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #cbd5e1;
+}
+
+.paso {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  font-size: 12.5px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.paso:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.paso b {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border-color);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12.5px;
+  color: #0f172a;
+}
+
+.paso b::before {
+  content: "⚙️ ";
+  margin-right: 4px;
+}
+
+.paso pre {
+  margin: 0;
+  padding: 8px 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11.5px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #ffffff;
+  color: #334155;
+}
+
+.paso pre + pre {
+  border-top: 1px dashed var(--border-color);
+  background: #fcfcfc;
+}
+
+.paso .error {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+  border-top: 1px solid #fecaca;
+  font-weight: 500;
+}
+
+.vacio {
+  color: var(--text-muted);
+  font-size: 13.5px;
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 900px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+  #traza {
+    border-left: none;
+    border-top: 2px solid var(--border-color);
+    max-height: 40vh;
+  }
+}
